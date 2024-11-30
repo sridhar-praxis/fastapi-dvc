@@ -27,10 +27,6 @@ jobs:
       run: |
         docker run -d -p 8080:8080 fastapi-ml-app
 
-    - name: View Docker container logs
-      run: |
-        docker logs $(docker ps -q)
-
     - name: Test FastAPI app (optional)
       run: |
         curl http://localhost:8080/docs
