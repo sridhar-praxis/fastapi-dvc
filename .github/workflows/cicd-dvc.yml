@@ -1,0 +1,32 @@
+name: CI/CD Pipeline for FastAPI App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build Docker image
+      run: |
+        docker build -t fastapi-ml-app .
+
+    - name: Run Docker container
+      run: |
+        docker run -d -p 8080:8080 fastapi-ml-app
+
+    - name: Test FastAPI app (optional)
+      run: |
+        curl http://localhost:8080
